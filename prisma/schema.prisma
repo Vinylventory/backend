@@ -1,0 +1,134 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator typegraphql {
+  provider = "typegraphql-prisma"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Vinyl {
+  idVinyl       String       @id @default(uuid())
+  catNumber     String
+  dateCreated   DateTime     @default(now())
+  dateReleased  DateTime?
+  dateEdited    DateTime?
+  notePocket    String?
+  pressingLoc   String?
+  edition       String?
+  weight        Int?
+  rank          Int?
+  notes         String?
+  playedBy      PlayedBy[]
+  authored      Authored[]
+  credits       Credited[]
+  album         Album?       @relation(fields: [idAlbum], references: [idAlbum])
+  idAlbum       String?
+  label         Label?       @relation(fields: [idLabel], references: [idLabel])
+  idLabel       String?
+  tracks        Track[]
+  bought        Bought?      @relation(fields: [idBought], references: [idBought])
+  idBought      String?
+  pocketState   PocketState? @relation(fields: [idPocketState], references: [idPocketState])
+  idPocketState String?
+  state         State?       @relation(fields: [idState], references: [idState])
+  idState       String?
+  readSpeed     ReadSpeed    @relation(fields: [idReadSpeed], references: [idReadSpeed])
+  idReadSpeed   String
+}
+
+model Artist {
+  idArtist String     @id @default(uuid())
+  surname  String?
+  name     String
+  origin   String?
+  credits  Credit[]
+  playedBy PlayedBy[]
+  authored Authored[]
+}
+
+model Album {
+  idAlbum String  @id @default(uuid())
+  name    String
+  vinyls  Vinyl[]
+}
+
+model Label {
+  idLabel String  @id @default(uuid())
+  name    String
+  vinyls  Vinyl[]
+}
+
+model Track {
+  idTrack  String @id @default(uuid())
+  name     String
+  duration Int?
+  vinyl    Vinyl  @relation(fields: [idVinyl], references: [idVinyl])
+  idVinyl  String
+}
+
+model Bought {
+  idBought String   @id @default(uuid())
+  loc      String
+  date     DateTime
+  price    Int?
+  note     String?
+  vinyls   Vinyl[]
+}
+
+model PocketState {
+  idPocketState String  @id @default(uuid())
+  name          String
+  vinyls        Vinyl[]
+}
+
+model State {
+  idState String  @id @default(uuid())
+  name    String
+  vinyls  Vinyl[]
+}
+
+model ReadSpeed {
+  idReadSpeed String  @id @default(uuid())
+  speed       String
+  vinyls      Vinyl[]
+}
+
+model Credit {
+  idCredit  String     @id @default(uuid())
+  role      String?
+  note      String?
+  artist    Artist     @relation(fields: [idArtist], references: [idArtist])
+  idArtist  String
+  crediteds Credited[]
+}
+
+// Many to Many classes
+
+model PlayedBy {
+  idPlayedBy String @id @default(uuid())
+  artist     Artist @relation(fields: [idArtist], references: [idArtist])
+  idArtist   String
+  vinyl      Vinyl  @relation(fields: [idVinyl], references: [idVinyl])
+  idVinyl    String
+}
+
+model Authored {
+  idAuthored String @id @default(uuid())
+  artist     Artist @relation(fields: [idArtist], references: [idArtist])
+  idArtist   String
+  vinyl      Vinyl  @relation(fields: [idVinyl], references: [idVinyl])
+  idVinyl    String
+}
+
+model Credited {
+  idCredited String @id @default(uuid())
+  credit     Credit @relation(fields: [idCredit], references: [idCredit])
+  idCredit   String
+  vinyl      Vinyl  @relation(fields: [idVinyl], references: [idVinyl])
+  idVinyl    String
+}
