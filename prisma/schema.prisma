@@ -39,6 +39,14 @@ model Vinyl {
   idState       String?
   readSpeed     ReadSpeed    @relation(fields: [idReadSpeed], references: [idReadSpeed])
   idReadSpeed   String
+  images        Image[]
+}
+
+model Image {
+  idImage String @id @default(uuid())
+  path    String
+  vinyl   Vinyl  @relation(fields: [idVinyl], references: [idVinyl])
+  idVinyl String
 }
 
 model Artist {

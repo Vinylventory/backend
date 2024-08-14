@@ -18,6 +18,7 @@ export default [{
     ignores: [
         ".prettierrc.mjs",
         "eslint.config.mjs",
+        "schema.graphql",
     ],
 }, ...compat.extends(
     "eslint:recommended",
@@ -53,9 +54,6 @@ export default [{
     files: ["**/*.graphql"],
     languageOptions: {
         parser: graphql.parser,
-    },
-    plugins: {
-        "@graphql-eslint": {rules: graphql.rules},
     },
     rules: {
         "@graphql-eslint/no-anonymous-operations": "error",

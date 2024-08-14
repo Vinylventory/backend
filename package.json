@@ -25,16 +25,21 @@
     "graphql-fields": "^2.0.3",
     "graphql-scalars": "^1.23.0",
     "graphql-type-json": "^0.3.2",
+    "multer": "^1.4.5-lts.1",
     "reflect-metadata": "^0.2.2",
     "ts-node": "^10.9.2",
-    "type-graphql": "^2.0.0-rc.2"
+    "type-graphql": "^2.0.0-rc.2",
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.1.0",
     "@eslint/js": "^9.9.0",
     "@graphql-eslint/eslint-plugin": "^4.0.0-alpha.4",
+    "@types/cors": "^2.8.17",
     "@types/graphql": "^14.5.0",
+    "@types/multer": "^1.4.11",
     "@types/node": "^22.2.0",
+    "@types/uuid": "^10.0.0",
     "@types/validator": "^13.12.0",
     "@types/ws": "^8.5.12",
     "@typescript-eslint/eslint-plugin": "^8.1.0",
