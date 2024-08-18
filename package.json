@@ -13,6 +13,7 @@
     "build": "tsc",
     "start": "node dist/src/index.js",
     "initPrisma": "npx prisma migrate dev --name init",
+    "migrate": "npx prisma migrate dev --name",
     "generate": "npx prisma generate",
     "seedDb": "npx prisma db seed"
   },
@@ -21,6 +22,7 @@
     "@prisma/client": "^5.18.0",
     "@types/graphql-fields": "^1.3.9",
     "class-validator": "^0.14.1",
+    "dotenv": "^16.4.5",
     "graphql": "^16.9.0",
     "graphql-fields": "^2.0.3",
     "graphql-scalars": "^1.23.0",

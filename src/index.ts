@@ -7,18 +7,48 @@ import { ApolloServer, BaseContext } from "@apollo/server";
 import { PrismaClient } from "@prisma/client";
 import { ApolloServerPluginLandingPageProductionDefault } from "@apollo/server/plugin/landingPage/default";
 import { ApolloServerPluginLandingPageDisabled } from "@apollo/server/plugin/disabled";
-import express, { Request, Response } from "express";
+import express, { Request, Response, NextFunction } from "express";
 import multer from "multer";
 import path from "path";
 import { v4 as uuidv4 } from "uuid";
 import * as fs from "node:fs";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 interface Context extends BaseContext {
   prisma: PrismaClient;
 }
 
+const generateAndSaveToken = () => {
+  let token = process.env.AUTH_TOKEN;
+
+  if (!token) {
+    token = uuidv4();
+    fs.appendFileSync(".env", `\nAUTH_TOKEN=${token}\n`);
+    console.log(`Generated Auth Token: ${token}`);
+  } else {
+    console.log(`Auth Token loaded from .env: ${token}`);
+  }
+
+  return token;
+};
+
+let authToken = "";
+
+const authenticateToken = (req: Request, res: Response, next: NextFunction) => {
+  const token = req.headers.authorization?.split(" ")[1]; // Expecting "Bearer <token>"
+
+  if (token === authToken) {
+    next();
+  } else {
+    res.status(403).json({ message: "Forbidden: Invalid or missing token" });
+  }
+};
+
 const startExpressServer = (app: express.Express, prisma: PrismaClient, upload: multer.Multer) => {
   app.use(express.json());
+  app.use(authenticateToken);
 
   // Route for uploading images
   // eslint-disable-next-line @typescript-eslint/no-misused-promises
@@ -29,11 +59,13 @@ const startExpressServer = (app: express.Express, prisma: PrismaClient, upload: 
 
       if (!req.file) {
         res.status(400).json({ message: "No file uploaded" });
+        console.log("No file uploaded");
         return;
       }
 
       if (!idVinyl || typeof idVinyl !== "string") {
         res.status(400).json({ message: "idVinyl is required as a body parameter" });
+        console.log("idVinyl is required as a body parameter");
         return;
       }
 
@@ -41,6 +73,12 @@ const startExpressServer = (app: express.Express, prisma: PrismaClient, upload: 
       const newPath = path.join("Images", uniqueName);
 
       fs.renameSync(req.file.path, newPath);
+
+      if ((await prisma.vinyl.findUnique({ where: { idVinyl: idVinyl } })) == null) {
+        res.status(400).json({ message: "idVinyl incorrect" });
+        console.log("idVinyl incorrect");
+        return;
+      }
 
       const image = await prisma.image.create({
         data: {
@@ -103,9 +141,9 @@ const startGraphqlAPI = async (app: express.Express) => {
 
   app.use(
     "/graphql",
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument,@typescript-eslint/no-unsafe-call
     cors<cors.CorsRequest>(),
     express.json(),
+    authenticateToken,
     expressMiddleware(server, {
       // eslint-disable-next-line @typescript-eslint/require-await
       context: async () => ({
@@ -125,4 +163,5 @@ void startGraphqlAPI(app);
 
 app.listen(4000, "0.0.0.0", () => {
   console.log("Listening...");
+  authToken = generateAndSaveToken();
 });

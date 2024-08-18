@@ -25,7 +25,7 @@ model Vinyl {
   notes         String?
   playedBy      PlayedBy[]
   authored      Authored[]
-  credits       Credited[]
+  credits       Credit[]
   album         Album?       @relation(fields: [idAlbum], references: [idAlbum])
   idAlbum       String?
   label         Label?       @relation(fields: [idLabel], references: [idLabel])
@@ -44,7 +44,7 @@ model Vinyl {
 
 model Image {
   idImage String @id @default(uuid())
-  path    String
+  path    String @unique
   vinyl   Vinyl  @relation(fields: [idVinyl], references: [idVinyl])
   idVinyl String
 }
@@ -53,21 +53,23 @@ model Artist {
   idArtist String     @id @default(uuid())
   surname  String?
   name     String
-  origin   String?
+  origin   String
   credits  Credit[]
   playedBy PlayedBy[]
   authored Authored[]
+
+  @@unique(fields: [surname, name, origin])
 }
 
 model Album {
   idAlbum String  @id @default(uuid())
-  name    String
+  name    String  @unique
   vinyls  Vinyl[]
 }
 
 model Label {
   idLabel String  @id @default(uuid())
-  name    String
+  name    String  @unique
   vinyls  Vinyl[]
 }
 
@@ -86,33 +88,36 @@ model Bought {
   price    Int?
   note     String?
   vinyls   Vinyl[]
+
+  @@unique(fields: [loc, date])
 }
 
 model PocketState {
   idPocketState String  @id @default(uuid())
-  name          String
+  name          String  @unique
   vinyls        Vinyl[]
 }
 
 model State {
   idState String  @id @default(uuid())
-  name    String
+  name    String  @unique
   vinyls  Vinyl[]
 }
 
 model ReadSpeed {
   idReadSpeed String  @id @default(uuid())
-  speed       String
+  speed       String  @unique
   vinyls      Vinyl[]
 }
 
 model Credit {
-  idCredit  String     @id @default(uuid())
-  role      String?
-  note      String?
-  artist    Artist     @relation(fields: [idArtist], references: [idArtist])
-  idArtist  String
-  crediteds Credited[]
+  idCredit String  @id @default(uuid())
+  role     String?
+  note     String?
+  artist   Artist  @relation(fields: [idArtist], references: [idArtist])
+  idArtist String
+  vinyl    Vinyl   @relation(fields: [idVinyl], references: [idVinyl])
+  idVinyl  String
 }
 
 // Many to Many classes
@@ -123,6 +128,8 @@ model PlayedBy {
   idArtist   String
   vinyl      Vinyl  @relation(fields: [idVinyl], references: [idVinyl])
   idVinyl    String
+
+  @@unique(fields: [idArtist, idVinyl])
 }
 
 model Authored {
@@ -131,12 +138,6 @@ model Authored {
   idArtist   String
   vinyl      Vinyl  @relation(fields: [idVinyl], references: [idVinyl])
   idVinyl    String
-}
 
-model Credited {
-  idCredited String @id @default(uuid())
-  credit     Credit @relation(fields: [idCredit], references: [idCredit])
-  idCredit   String
-  vinyl      Vinyl  @relation(fields: [idVinyl], references: [idVinyl])
-  idVinyl    String
+  @@unique(fields: [idArtist, idVinyl])
 }

@@ -44,10 +44,9 @@ m1=0..*
 m2=1</panel_attributes><additional_attributes>10;10;350;10</additional_attributes></element><element><id>Relation</id><coordinates><x>279</x><y>72</y><w>135</w><h>45</h></coordinates><panel_attributes>lt=-
 m1=0..*
 m2=1
-</panel_attributes><additional_attributes>10;20;130;20</additional_attributes></element><element><id>Relation</id><coordinates><x>81</x><y>72</y><w>135</w><h>45</h></coordinates><panel_attributes>lt=-
-m1=1..*
-m2=0..*
-Credited</panel_attributes><additional_attributes>10;20;130;20</additional_attributes></element><element><id>Relation</id><coordinates><x>81</x><y>9</y><w>333</w><h>45</h></coordinates><panel_attributes>lt=-
+</panel_attributes><additional_attributes>10;20;130;20</additional_attributes></element><element><id>Relation</id><coordinates><x>81</x><y>81</y><w>135</w><h>36</h></coordinates><panel_attributes>lt=-
+m1=1
+m2=0..*</panel_attributes><additional_attributes>10;10;130;10</additional_attributes></element><element><id>Relation</id><coordinates><x>81</x><y>9</y><w>333</w><h>45</h></coordinates><panel_attributes>lt=-
 m1=0..*
 m2=0..*
 Played by</panel_attributes><additional_attributes>10;20;350;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>396</x><y>441</y><w>90</w><h>54</h></coordinates><panel_attributes>PocketState
