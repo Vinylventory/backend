@@ -1,8 +1,8 @@
 # Vinylventory - Backend
 
-![GitHub License](https://img.shields.io/github/license/canardconfit/vinylventory-backend)
-![GitHub commit activity](https://img.shields.io/github/commit-activity/m/canardconfit/vinylventory-backend)
-![GitHub Release](https://img.shields.io/github/v/release/canardconfit/vinylventory-backend)
+![GitHub License](https://img.shields.io/github/license/vinylventory/backend)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/m/vinylventory/backend)
+![GitHub Release](https://img.shields.io/github/v/release/vinylventory/backend)
 
 **Vinylventory** is a simple iOS application that lets you take inventory of these vinyls.
 
