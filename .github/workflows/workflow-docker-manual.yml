@@ -72,7 +72,7 @@ jobs:
         with:
           context: .
           load: true
-          tags: ghcr.io/${{ steps.lower-repo.outputs.repository }}:${{ steps.generate_temporary_tag_name.outputs.test_tag }}
+          tags: ghcr.io/CanardConfit/vinylventory-backend:${{ steps.generate_temporary_tag_name.outputs.test_tag }}
           build-args: |
             RELEASETAG=${{ github.event.inputs.tags }}
       - name: Build multi-arch Docker image, tag and push to registries
@@ -81,6 +81,6 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: ${{ steps.lower-repo.outputs.repository }}:${{ github.event.inputs.tags }}, quay.io/${{ steps.lower-repo.outputs.repository }}:${{ github.event.inputs.tags }}, ghcr.io/${{ steps.lower-repo.outputs.repository }}:${{ github.event.inputs.tags }}
+          tags: CanardConfit/vinylventory-backend:${{ github.event.inputs.tags }}, quay.io/CanardConfit/vinylventory-backend:${{ github.event.inputs.tags }}, ghcr.io/CanardConfit/vinylventory-backend:${{ github.event.inputs.tags }}
           build-args: |
             RELEASETAG=${{ github.event.inputs.tags }}

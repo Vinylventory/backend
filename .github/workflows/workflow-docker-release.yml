@@ -37,7 +37,7 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }} # NOTE: This MUST be the password NOT the token
-          repository: "CanardConfit/vinylventory-backend"
+          repository: "canardconfit/vinylventory-backend"
           short-description: ${{ github.event.repository.description }}
       - name: DEBUG Show Runners environment
         uses: nick-fields/retry@v2
@@ -85,7 +85,7 @@ jobs:
         with:
           context: .
           load: true
-          tags: ghcr.io/${{ steps.lower-repo.outputs.repository }}:${{ steps.generate_temporary_tag_name.outputs.test_tag }}
+          tags: ghcr.io/canardconfit/vinylventory-backend:${{ steps.generate_temporary_tag_name.outputs.test_tag }}
           build-args: |
             RELEASETAG=${{ steps.identify_github_release_tag_name.outputs.tag }}
       # note this will re-use the internal cached amd64 image from the previous build
@@ -95,6 +95,6 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: ${{ steps.lower-repo.outputs.repository }}:latest, ${{ steps.lower-repo.outputs.repository }}:${{ steps.identify_github_release_tag_name.outputs.tag }}, quay.io/${{ steps.lower-repo.outputs.repository }}:latest, quay.io/${{ steps.lower-repo.outputs.repository }}:${{ steps.identify_github_release_tag_name.outputs.tag }}, ghcr.io/${{ steps.lower-repo.outputs.repository }}:latest, ghcr.io/${{ steps.lower-repo.outputs.repository }}:${{ steps.identify_github_release_tag_name.outputs.tag }}
+          tags: canardconfit/vinylventory-backend:latest, canardconfit/vinylventory-backend:${{ steps.identify_github_release_tag_name.outputs.tag }}, quay.io/canardconfit/vinylventory-backend:latest, quay.io/canardconfit/vinylventory-backend:${{ steps.identify_github_release_tag_name.outputs.tag }}, ghcr.io/canardconfit/vinylventory-backend:latest, ghcr.io/canardconfit/vinylventory-backend:${{ steps.identify_github_release_tag_name.outputs.tag }}
           build-args: |
             RELEASETAG=${{ steps.identify_github_release_tag_name.outputs.tag }}
