@@ -4,11 +4,11 @@
     "prisma/seed.ts"
   ],
   "compilerOptions": {
-    "target": "ES2021",
+    "target": "ESNext",
     "module": "commonjs",
     "lib": [
       "esnext.asynciterable",
-      "ES2021",
+      "ESNext",
       "DOM",
     ],
     "paths": {

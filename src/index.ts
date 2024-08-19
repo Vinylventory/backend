@@ -25,7 +25,7 @@ const generateAndSaveToken = () => {
 
   if (!token) {
     token = uuidv4();
-    fs.appendFileSync(".env", `\nAUTH_TOKEN=${token}\n`);
+    fs.appendFileSync(".env.development", `\nAUTH_TOKEN=${token}\n`);
     console.log(`Generated Auth Token: ${token}`);
   } else {
     console.log(`Auth Token loaded from .env: ${token}`);
