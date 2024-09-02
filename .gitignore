@@ -35,3 +35,4 @@ dist/
 /graphql.config.yml
 /schema.graphql
 Images/
+.env
