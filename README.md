@@ -6,6 +6,8 @@
 
 **Vinylventory** is a simple iOS application that lets you take inventory of these vinyls.
 
+> **Note**: This project is now out of date, as version 2.0 of the iOS application supports iCloud.
+
 This project is the server you need to store and use the [iOS app](https://github.com/Vinylventory/app-ios).
 
 ## Installation
